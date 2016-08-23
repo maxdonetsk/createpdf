@@ -62,10 +62,9 @@ page.open(address, function (status) {
             waitFor(function () {
                 // Check in the page if a specific element is now visible
                 if (isClicked === false) {
-                    page.evaluate(function () {
-                        $('.nw-page-2').click();
-                    });
+                    $('.nw-page-2').click();
                     isClicked = true;
+                    return false;
                 } else {
                     page.evaluate(function () {
                         return $("#nw-registration").is(":visible");
