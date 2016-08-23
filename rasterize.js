@@ -76,16 +76,3 @@ page.open(address, function (status) {
         });
     }
 });
-
-
-
-
-waitFor(function() {
-    // Check in the page if a specific element is now visible
-    return page.evaluate(function() {
-        return $("#signin-dropdown").is(":visible");
-    });
-}, function() {
-   console.log("The sign-in dialog should be visible now.");
-   phantom.exit();
-});
