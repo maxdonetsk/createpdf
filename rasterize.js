@@ -61,13 +61,13 @@ page.open(address, function (status) {
         page.includeJs('http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js', function () {
             waitFor(function() {
                 // Check in the page if a specific element is now visible
-                return page.evaluate(function() {
+                var isVisible = return page.evaluate(function(isClicked) {
                 	if (isClicked === false) {
             			$('.nw-page-2').click();
             			isClicked = true;
             		};
                     return $("#nw-registration").is(":visible");
-                });
+                }, isClicked);
             }, function() {
                console.log("The Registration button should be visible now.");
                page.render(output);
