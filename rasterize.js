@@ -60,31 +60,6 @@ page.open(address, function (status) {
     } else {
         page.includeJs('http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js', function () {
             waitFor(function () {
-                // Check in the page if a specific element is now visible
-//                if (isClicked === false) {
-//                    page.evaluateJavaScript('function () {$(".nw-page-2").click();}');
-//                    isClicked = true;
-//                    testFx();
-//                } else {
-//                    page.evaluateAsync(function () {
-//                        $.ajax({
-//                            url: 'http://lang.makesocial.net/index.php?r=pages/pages/page1&lang=en&disc=4',
-//                            data: 'languageChoiseSelect=4',
-//                            type: 'GET',
-//                            success: function (response) {
-//                                setTimeout(function () {
-//                                    onReady();
-//                                }, 2000);
-//                            },
-//                            error: function (reject) {
-//                                
-//                            }
-//                        });
-//                    });
-////                    return page.evaluate(function () {
-////                        return $("#nw-registration").is(":visible");
-////                    });
-//                }
                 return page.evaluate(function () {
                     return $('.fa.fa-hand-paper-o').is(':visible');
                 });
