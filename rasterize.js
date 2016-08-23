@@ -66,7 +66,6 @@ page.open(address, function (status) {
                         $('.nw-page-2').click();
                     });
                     isClicked = true;
-                    return false;
                 } else {
                     page.evaluate(function () {
                         return $("#nw-registration").is(":visible");
