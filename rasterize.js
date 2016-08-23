@@ -62,7 +62,7 @@ page.open(address, function (status) {
             waitFor(function () {
                 // Check in the page if a specific element is now visible
                 if (isClicked === false) {
-                    page.evaluateAsync(function () {
+                    page.evaluateJavaScript(function () {
                         $('.nw-page-2').click();
                         isClicked = true;
                         return false;
