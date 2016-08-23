@@ -3,7 +3,7 @@ var page = require('webpage').create(),
         system = require('system'),
         address, output, size;
 
-address = 'http://makesocial.net';
+address = 'https://www.theirfans.com/?r=user/auth/login';
 output = 'test.pdf';
 page.viewportSize = {width: 600, height: 600};
 if (system.args.length > 3 && system.args[2].substr(-4) === ".pdf") {
@@ -59,33 +59,36 @@ page.open(address, function (status) {
         console.log("Unable to access network");
     } else {
         page.includeJs('http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js', function () {
-            waitFor(function testFx() {
+            waitFor(function () {
                 // Check in the page if a specific element is now visible
-                if (isClicked === false) {
-                    page.evaluateJavaScript('function () {$(".nw-page-2").click();}');
-                    isClicked = true;
-                    testFx();
-                } else {
-                    page.evaluateAsync(function () {
-                        $.ajax({
-                            url: 'http://lang.makesocial.net/index.php?r=pages/pages/page1&lang=en&disc=4',
-                            data: 'languageChoiseSelect=4',
-                            type: 'GET',
-                            success: function (response) {
-                                setTimeout(function () {
-                                    onReady();
-                                }, 2000);
-                            },
-                            error: function (reject) {
-                                
-                            }
-                        });
-                    });
-//                    return page.evaluate(function () {
-//                        return $("#nw-registration").is(":visible");
+//                if (isClicked === false) {
+//                    page.evaluateJavaScript('function () {$(".nw-page-2").click();}');
+//                    isClicked = true;
+//                    testFx();
+//                } else {
+//                    page.evaluateAsync(function () {
+//                        $.ajax({
+//                            url: 'http://lang.makesocial.net/index.php?r=pages/pages/page1&lang=en&disc=4',
+//                            data: 'languageChoiseSelect=4',
+//                            type: 'GET',
+//                            success: function (response) {
+//                                setTimeout(function () {
+//                                    onReady();
+//                                }, 2000);
+//                            },
+//                            error: function (reject) {
+//                                
+//                            }
+//                        });
 //                    });
-                }
-            }, function onReady () {
+////                    return page.evaluate(function () {
+////                        return $("#nw-registration").is(":visible");
+////                    });
+//                }
+                return page.evaluate(function () {
+                    return $('#___ytsubscribe_0').is(':visible');
+                });
+            }, function () {
                 console.log("The Registration button should be visible now.");
                 page.render(output);
                 phantom.exit();
