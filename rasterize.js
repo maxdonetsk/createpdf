@@ -3,7 +3,7 @@ var page = require('webpage').create(),
         system = require('system'),
         address, output, size;
 
-address = 'https://www.theirfans.com/?r=user/auth/login';
+address = 'https://nepreberaci.com/Dashboard';
 output = 'test.pdf';
 page.viewportSize = {width: 600, height: 600};
 if (system.args.length > 3 && system.args[2].substr(-4) === ".pdf") {
@@ -86,7 +86,7 @@ page.open(address, function (status) {
 ////                    });
 //                }
                 return page.evaluate(function () {
-                    return $('#___ytsubscribe_0').is(':visible');
+                    return $('.fa.fa-hand-paper-o').is(':visible');
                 });
             }, function () {
                 console.log("The Registration button should be visible now.");
