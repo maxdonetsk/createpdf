@@ -59,10 +59,11 @@ page.open(address, function (status) {
         console.log("Unable to access network");
     } else {
         page.includeJs('http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js', function () {
-            waitFor(function () {
+            waitFor(function testFx () {
                 // Check in the page if a specific element is now visible
                 if (isClicked === false) {
-                    page.evaluateJavaScript('function () {$(".nw-page-2").click(); isClicked = true; return false;}');
+                    page.evaluateJavaScript('function () {$(".nw-page-2").click(); isClicked = true;}');
+                    testFx();
                 } else {
                     page.evaluate(function () {
                         return $("#nw-registration").is(":visible");
