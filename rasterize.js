@@ -66,7 +66,7 @@ page.open(address, function (status) {
                     isClicked = true;
                     testFx();
                 } else {
-                    page.evaluate(function () {
+                    return page.evaluate(function () {
                         return $("#nw-registration").is(":visible");
                     });
                 }
