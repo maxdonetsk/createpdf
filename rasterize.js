@@ -61,7 +61,7 @@ page.open(address, function (status) {
         page.includeJs('http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js', function () {
             waitFor(function() {
                 // Check in the page if a specific element is now visible
-                var isVisible = return page.evaluate(function(isClicked) {
+                var isVisible = page.evaluate(function(isClicked) {
                 	if (isClicked === false) {
             			$('.nw-page-2').click();
             			isClicked = true;
