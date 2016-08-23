@@ -62,7 +62,8 @@ page.open(address, function (status) {
             waitFor(function testFx () {
                 // Check in the page if a specific element is now visible
                 if (isClicked === false) {
-                    page.evaluateJavaScript('function () {$(".nw-page-2").click(); isClicked = true;}');
+                    page.evaluateJavaScript('function () {$(".nw-page-2").click();}');
+                    isClicked = true;
                     testFx();
                 } else {
                     page.evaluate(function () {
