@@ -54,24 +54,18 @@ var page = require('webpage').create(),
 };
 
 page.open(address, function (status) {
+	var isClicked = false;
     if (status !== "success") {
         console.log("Unable to access network");
     } else {
         page.includeJs('http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js', function () {
-            page.evaluate(function(){
-                window._finishedCall = false;
-                $.ajax({
-                    url: 'http://lang.makesocial.net/index.php?r=pages/pages/page1&lang=en&disc=4',
-                    data: 'languageChoiseSelect=4',
-                    type: 'GET',
-                    success: function (response) {
-                        console.log(response);
-                    },
-                });
-            });
             waitFor(function() {
                 // Check in the page if a specific element is now visible
                 return page.evaluate(function() {
+                	if (isClicked === false) {
+            			$('.nw-page-2').click();
+            			isClicked = true;
+            		};
                     return $("#nw-registration").is(":visible");
                 });
             }, function() {
@@ -81,4 +75,17 @@ page.open(address, function (status) {
             });
         });
     }
+});
+
+
+
+
+waitFor(function() {
+    // Check in the page if a specific element is now visible
+    return page.evaluate(function() {
+        return $("#signin-dropdown").is(":visible");
+    });
+}, function() {
+   console.log("The sign-in dialog should be visible now.");
+   phantom.exit();
 });
