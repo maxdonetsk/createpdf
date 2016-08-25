@@ -37,7 +37,7 @@ page.open(address, function (status) {
                 interval = setInterval(function () {
                     if (!condition) {
                         console.log('Failed.');
-                        return page.evaluate(function () {
+                        condition = page.evaluate(function () {
                             return $('.fa.fa-hand-paper-o').is(':visible');
                         });
                     } else {
