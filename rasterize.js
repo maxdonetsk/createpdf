@@ -58,7 +58,7 @@ page.open(address, function (status) {
     if (status !== "success") {
         console.log("Unable to access network");
     } else {
-        page.includeJs('http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js', function () {
+//        page.includeJs('http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js', function () {
             waitFor(function () {
                 return page.evaluate(function () {
                     return $('.fa.fa-hand-paper-o').is(':visible');
@@ -68,6 +68,6 @@ page.open(address, function (status) {
                 page.render(output);
                 phantom.exit();
             });
-        });
+//        });
     }
 });
