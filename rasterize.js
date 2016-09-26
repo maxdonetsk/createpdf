@@ -10,7 +10,7 @@ page.onResourceError = function (resourceError) {
 
 //start of custom
 if (system.args.length === 1) {
-    address = 'https://qa-web.intendu.com/#/players/5704dd931800002927db62a3/summary/true';
+    address = 'http://52.35.179.136/summary/';
     output = 'unused.pdf';
     page.viewportSize = {width: 700, height: 600};
     size = 'A4';
