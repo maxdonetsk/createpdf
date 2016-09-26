@@ -3,6 +3,11 @@ var page = require('webpage').create(),
         address, output, size,
         organizationName, authToken, domain;
 
+page.onResourceError = function (resourceError) {
+    console.log('Unable to load resource (#' + resourceError.id + 'URL:' + resourceError.url + ')');
+    console.log('Error code: ' + resourceError.errorCode + '. Description: ' + resourceError.errorString);
+};
+
 //start of custom
 if (system.args.length === 1) {
     address = 'https://qa-web.intendu.com/#/players/5704dd931800002927db62a3/summary/true';
