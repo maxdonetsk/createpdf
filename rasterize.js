@@ -11,7 +11,7 @@ if (system.args.length === 1) {
     size = 'A4';
     page.paperSize = {format: size, orientation: 'portrait', margin: '1cm'};
     organizationName = 'intendu';
-    authToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjNjM5ODhkNzEwYWIzOTIyMjIwNDRlYjNjYzA4ZTkwNDc0NzM5ZDg0NGIyNGIyMGNiOTBiZTk3NjI3ZmMxNWUxM2Q3ODhkMWE4ODRjODM5NzliODkzY2ZhYmMxYzE0MjY1NDM1MmRjZjg2ZDIwNmY1YzBkZTQ1M2IzMGYzYTM2MzI5NzQ0YmJmNmFjNzkwYzQzZTdlN2Y4MGNlN2RmYzk1IiwiaXNzIjoicGxheS1zaWxob3VldHRlIiwiZXhwIjoxNDc0ODM0MjgzLCJpYXQiOjE0NzQ3OTEwODMsImp0aSI6IjAxNDFhMGJkMjhiNTllNWRkOWUyNzNmYjZhODNkMjY2ZGRkOTEyM2JiNDRhYmZhYWFhODNlOTdhZWE2YzVlMjEwYWI5YTRkNDhlZGFhOTEwOWZiYmY2NzQwMWQ4ZTMyZDgzODhkNjQ4ODI2YjM4NDdiMmViMDc3OTgzZWZjOWE2Njc5MjM0ZDBhZThkIn0.Kh3fhBY-UP6V1j1Q1JdLDkPwf0_M9vaJthyewyN0vAg';
+    authToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjNjM5ODhkNzEwYWIzOTIyMjIwNDRlYjNjYzA4ZTkwNDc0NzM5ZDg0NGIyNGIyMGNiOTBiZTk3NjI3ZmMxNWUxM2Q3ODhkMWE4ODRjODM5NzliODkzY2ZhYmMxYzE0MjY1NDM1MmRjZjg2ZDIwNmY1YzBkZTQ1M2IzMGYzYTM2MzI5NzQ0YmJmNmFjNzkwYzQzZTdlN2Y4MGNlN2RmYzk1IiwiaXNzIjoicGxheS1zaWxob3VldHRlIiwiZXhwIjoxNDc0OTM2MDI5LCJpYXQiOjE0NzQ4OTI4MjksImp0aSI6IjFlODNlZjg0MDdhOTYxMzk4ZWEzOWU5NTc2NTJlMDU5ZjViZDU4NWZlMmQ3YWEzMjZmNzg0YTlhNTIxYTkyYWY0NmIyMjI1ODI1N2ZkY2MyYjNjOGVhZmIxZWJhYTBjMGU1ZmFjNTEyNTBlMjkyMDRmZjA4NjM0MDllNzc1ODRmMjZiZDUwYTA5ODQxIn0.GOMTs0crabpRhFx3Qqgao8E0dLEYv7WqHoDTGfzXsaY';
     domain = 'qa-web.intendu.com';
 
     phantom.addCookie({
@@ -46,79 +46,6 @@ if (system.args.length === 1) {
     });
 }
 //end of custom
-
-if (system.args.length < 3 || system.args.length > 7) {
-    console.log('Usage: rasterize.js URL filename paperwidth*paperheight|paperformat organizationName authToken domain');
-    console.log('  paper (pdf output) examples: "5in*7.5in", "10cm*20cm", "A4", "Letter"');
-    phantom.exit(1);
-} else {
-    address = system.args[1];
-    output = system.args[2];
-    page.viewportSize = {width: 700, height: 600};
-    if (system.args.length > 3 && system.args[2].substr(-4) === ".pdf") {
-        size = system.args[3].split('*');
-        page.paperSize = size.length === 2 ? {width: size[0], height: size[1], margin: '0px'}
-        : {format: system.args[3], orientation: 'portrait', margin: '1cm'};
-    }
-    organizationName = system.args[4];
-    authToken = system.args[5];
-    domain = system.args[6];
-
-    phantom.addCookie({
-        'name': 'DEFAULT_ORG_NAME', /* required property */
-        'value': organizationName, /* required property */
-        'domain': domain,
-        'path': '/', /* required property */
-        'httponly': false,
-        'secure': false,
-        'expires': (new Date()).getTime() + (1000 * 60 * 60)   /* <-- expires in 1 hour */
-    });
-    phantom.addCookie({
-        'name': 'auth-token', /* required property */
-        'value': authToken, /* required property */
-        'domain': "intendu.com",
-        'path': '/', /* required property */
-        'httponly': false,
-        'secure': false,
-        'expires': (new Date()).getTime() + (1000 * 60 * 60)   /* <-- expires in 1 hour */
-    });
-    page.open(address, function (status) {
-        if (status !== 'success') {
-            console.log('Unable to load the address!');
-            phantom.exit();
-        } else {
-            window.setTimeout(function () {
-                //page.render(output);
-                page.render('/dev/stdout', {format: 'pdf'})
-                phantom.exit();
-            }, 30000);
-        }
-    });
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
