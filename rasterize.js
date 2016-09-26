@@ -3,6 +3,16 @@ var page = require('webpage').create(),
         address, output, size,
         organizationName, authToken, domain;
 
+
+if (system.args.length === 1) {
+    system.args.push('https://qa-web.intendu.com/#/players/5704dd931800002927db62a3/summary/true');
+    system.args.push('unused.pdf');
+    system.args.push('A4');
+    system.args.push('intendu');
+    system.args.push('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjNjM5ODhkNzEwYWIzOTIyMjIwNDRlYjNjYzA4ZTkwNDc0NzM5ZDg0NGIyNGIyMGNiOTBiZTk3NjI3ZmMxNWUxM2Q3ODhkMWE4ODRjODM5NzliODkzY2ZhYmMxYzE0MjY1NDM1MmRjZjg2ZDIwNmY1YzBkZTQ1M2IzMGYzYTM2MzI5NzQ0YmJmNmFjNzkwYzQzZTdlN2Y4MGNlN2RmYzk1IiwiaXNzIjoicGxheS1zaWxob3VldHRlIiwiZXhwIjoxNDc0ODM0MjgzLCJpYXQiOjE0NzQ3OTEwODMsImp0aSI6IjAxNDFhMGJkMjhiNTllNWRkOWUyNzNmYjZhODNkMjY2ZGRkOTEyM2JiNDRhYmZhYWFhODNlOTdhZWE2YzVlMjEwYWI5YTRkNDhlZGFhOTEwOWZiYmY2NzQwMWQ4ZTMyZDgzODhkNjQ4ODI2YjM4NDdiMmViMDc3OTgzZWZjOWE2Njc5MjM0ZDBhZThkIn0.Kh3fhBY-UP6V1j1Q1JdLDkPwf0_M9vaJthyewyN0vAg');
+    system.args.push('qa-web.intendu.com');
+}
+
 if (system.args.length < 3 || system.args.length > 7) {
     console.log('Usage: rasterize.js URL filename paperwidth*paperheight|paperformat organizationName authToken domain');
     console.log('  paper (pdf output) examples: "5in*7.5in", "10cm*20cm", "A4", "Letter"');
