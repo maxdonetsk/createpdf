@@ -42,11 +42,18 @@ if (system.args.length === 1) {
             console.log('Unable to load the address!');
             phantom.exit();
         } else {
-            window.setTimeout(function () {
-                //page.render(output);
-                page.render('/dev/stdout', {format: 'pdf'})
-                phantom.exit();
-            }, 30000);
+            var condition = false,
+                    interval = setInterval(function () {
+                        if (!condition) {
+                            condition = page.evaluate(function () {
+                                return $('#allChartsRendered').is(':visible');
+                            });
+                        } else {
+                            clearInterval(interval);
+                            page.render(output);
+                            phantom.exit();
+                        }
+                    }, 250);
         }
     });
 }
