@@ -13,6 +13,37 @@ if (system.args.length === 1) {
     organizationName = 'intendu';
     authToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjNjM5ODhkNzEwYWIzOTIyMjIwNDRlYjNjYzA4ZTkwNDc0NzM5ZDg0NGIyNGIyMGNiOTBiZTk3NjI3ZmMxNWUxM2Q3ODhkMWE4ODRjODM5NzliODkzY2ZhYmMxYzE0MjY1NDM1MmRjZjg2ZDIwNmY1YzBkZTQ1M2IzMGYzYTM2MzI5NzQ0YmJmNmFjNzkwYzQzZTdlN2Y4MGNlN2RmYzk1IiwiaXNzIjoicGxheS1zaWxob3VldHRlIiwiZXhwIjoxNDc0ODM0MjgzLCJpYXQiOjE0NzQ3OTEwODMsImp0aSI6IjAxNDFhMGJkMjhiNTllNWRkOWUyNzNmYjZhODNkMjY2ZGRkOTEyM2JiNDRhYmZhYWFhODNlOTdhZWE2YzVlMjEwYWI5YTRkNDhlZGFhOTEwOWZiYmY2NzQwMWQ4ZTMyZDgzODhkNjQ4ODI2YjM4NDdiMmViMDc3OTgzZWZjOWE2Njc5MjM0ZDBhZThkIn0.Kh3fhBY-UP6V1j1Q1JdLDkPwf0_M9vaJthyewyN0vAg';
     domain = 'qa-web.intendu.com';
+
+    phantom.addCookie({
+        'name': 'DEFAULT_ORG_NAME', /* required property */
+        'value': organizationName, /* required property */
+        'domain': domain,
+        'path': '/', /* required property */
+        'httponly': false,
+        'secure': false,
+        'expires': (new Date()).getTime() + (1000 * 60 * 60)   /* <-- expires in 1 hour */
+    });
+    phantom.addCookie({
+        'name': 'auth-token', /* required property */
+        'value': authToken, /* required property */
+        'domain': "intendu.com",
+        'path': '/', /* required property */
+        'httponly': false,
+        'secure': false,
+        'expires': (new Date()).getTime() + (1000 * 60 * 60)   /* <-- expires in 1 hour */
+    });
+    page.open(address, function (status) {
+        if (status !== 'success') {
+            console.log('Unable to load the address!');
+            phantom.exit();
+        } else {
+            window.setTimeout(function () {
+                //page.render(output);
+                page.render('/dev/stdout', {format: 'pdf'})
+                phantom.exit();
+            }, 30000);
+        }
+    });
 }
 //end of custom
 
