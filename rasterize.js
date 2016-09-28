@@ -45,46 +45,55 @@ if (system.args.length < 3 || system.args.length > 7) {
             console.log('Unable to load the address!');
             phantom.exit();
         } else {
+            var jQueryVersion;
+            getjQueryVersion();
 
             //check if jQuery exists
             setTimeout(function () {
-                var jQueryVersion;
 
-                //declare a function to manipulate the DOM
-                var checkAndPrint = function () {
-                    var condition = false,
-                            interval = setInterval(function () {
-                                if (!condition) {
-                                    condition = page.evaluate(function () {
-                                        return $('#allChartsRendered').is(':visible');
-                                    });
-                                } else {
-                                    clearInterval(interval);
-                                    page.render(output);
-//                            page.render('/dev/stdout', {format: 'pdf'})
-                                    phantom.exit();
-                                }
-                            }, 250);
-                }
-
-                jQueryVersion = page.evaluate(function () {
-                    return (typeof jQuery === 'function') ? jQuery.fn.jquery : undefined;
-                });
                 if (jQueryVersion) {
-                    console.log('jQuery', jQueryVersion);
                     checkAndPrint();
                 } else {
                     console.log('This site does not use jQuery.');
+                    console.log('Including jQuery...');
                     page.includeJs(
                             // Include the https version, you can change this to http if you like.
                             'https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js',
                             function () {
                                 // jQuery is loaded, now manipulate the DOM
+                                console.log('This site uses jQuery now.');
+                                getjQueryVersion();
                                 checkAndPrint();
                             }
                     );
                 }
             }, 2000);
+
+            //get jQuery version
+            function getjQueryVersion() {
+                jQueryVersion = page.evaluate(function () {
+                    return (typeof jQuery === 'function') ? jQuery.fn.jquery : undefined;
+                });
+                
+                console.log('jQuery', jQueryVersion);
+            }
+
+            //declare a function to manipulate the DOM
+            function checkAndPrint() {
+                var condition = false,
+                        interval = setInterval(function () {
+                            if (!condition) {
+                                condition = page.evaluate(function () {
+                                    return $('#allChartsRendered').is(':visible');
+                                });
+                            } else {
+                                clearInterval(interval);
+                                page.render(output);
+//                            page.render('/dev/stdout', {format: 'pdf'})
+                                phantom.exit();
+                            }
+                        }, 250);
+            }
         }
     });
 }
