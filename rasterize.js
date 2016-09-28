@@ -49,6 +49,26 @@ if (system.args.length < 3 || system.args.length > 7) {
             //check if jQuery exists
             setTimeout(function () {
                 var jQueryVersion;
+
+                //declare a function to manipulate the DOM
+                var checkAndPrint = function() {
+                    var condition = false,
+                            interval = setInterval(function () {
+                                if (!condition) {
+                                    condition = page.evaluate(function () {
+                                        return $('#allChartsRendered').is(':visible');
+                                    });
+                                } else {
+                                    clearInterval(interval);
+                                    page.render(output);
+//                            page.render('/dev/stdout', {format: 'pdf'})
+                                    phantom.exit();
+                                }
+                            }, 250);
+                }
+
+
+
                 jQueryVersion = page.evaluate(function () {
                     return (typeof jQuery === 'function') ? jQuery.fn.jquery : undefined;
                 });
@@ -68,25 +88,7 @@ if (system.args.length < 3 || system.args.length > 7) {
                             }
                     );
                 }
-                phantom.exit();
             }, 2000);
-
-            //declare a function to manipulate the DOM
-            function checkAndPrint() {
-                var condition = false,
-                        interval = setInterval(function () {
-                            if (!condition) {
-                                condition = page.evaluate(function () {
-                                    return $('#allChartsRendered').is(':visible');
-                                });
-                            } else {
-                                clearInterval(interval);
-                                page.render(output);
-//                            page.render('/dev/stdout', {format: 'pdf'})
-                                phantom.exit();
-                            }
-                        }, 250);
-            }
         }
     });
 }
