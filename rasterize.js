@@ -48,9 +48,7 @@ if (system.args.length < 3 || system.args.length > 7) {
 
             //check if jQuery exists
             setTimeout(function () {
-                var jQueryVersion;
-
-                jQueryVersion = page.evaluate(function () {
+                var jQueryVersion = page.evaluate(function () {
                     return (typeof jQuery === 'function') ? jQuery.fn.jquery : undefined;
                 });
                 if (jQueryVersion) {
@@ -63,7 +61,7 @@ if (system.args.length < 3 || system.args.length > 7) {
                 }
             }, 2000);
 
-            //check and print
+            //wait for element and print PDF
             var condition = false,
                     interval = setInterval(function () {
                         if (!condition) {
@@ -73,10 +71,10 @@ if (system.args.length < 3 || system.args.length > 7) {
                         } else {
                             clearInterval(interval);
                             page.render(output);
-//                                    page.render('/dev/stdout', {format: 'pdf'})
+//                            page.render('/dev/stdout', {format: 'pdf'})
                             phantom.exit();
                         }
-                    }, 250);
+                    }, 500);
         }
     });
 }
