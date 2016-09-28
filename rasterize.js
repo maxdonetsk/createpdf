@@ -55,21 +55,6 @@ if (system.args.length < 3 || system.args.length > 7) {
                 });
                 if (jQueryVersion) {
                     console.log('jQuery', jQueryVersion);
-
-                    //check and print
-                    var condition = false,
-                            interval = setInterval(function () {
-                                if (!condition) {
-                                    condition = page.evaluate(function () {
-                                        return $('#allChartsRendered').is(':visible');
-                                    });
-                                } else {
-                                    clearInterval(interval);
-                                    page.render(output);
-//                                    page.render('/dev/stdout', {format: 'pdf'})
-                                    phantom.exit();
-                                }
-                            }, 250);
                 } else {
                     console.log('This site does not use jQuery.');
                     // Include the https version, you can change this to http if you like.
