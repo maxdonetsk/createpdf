@@ -1,3 +1,5 @@
+//phantomjs --remote-debugger-port=9000 createpdf/rasterize.js http://52.35.179.136/summary/ unused.pdf A4 intendu eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjNjM5ODhkNzEwYWIzOTIyMjIwNDRlYjNjYzA4ZTkwNDc0NzM5ZDg0NGIyNGIyMGNiOTBiZTk3NjI3ZmMxNWUxM2Q3ODhkMWE4ODRjODM5NzliODkzY2ZhYmMxYzE0MjY1NDM1MmRjZjg2ZDIwNmY1YzBkZTQ1M2IzMGYzYTM2MzI5NzQ0YmJmNmFjNzkwYzQzZTdlN2Y4MGNlN2RmYzk1IiwiaXNzIjoicGxheS1zaWxob3VldHRlIiwiZXhwIjoxNDc1MDkyNDg2LCJpYXQiOjE0NzUwNDkyODYsImp0aSI6IjVlZTY4MzcyZGMzYjc4MThiYWEwOWJiZDA5YTA1ZWY5ZTQ4OTNmNjhmOTBjZjA2MjJkZGE3ZTA0YzQxNmQzMWI3OWE3ZDY1OWI2NjQ5YjAwNzVlOGU4ZmExMWIxNmVjZjExYzY3ZTMzZmFhN2M1MzhiYzY0YTgxODQ5ODk4YzRkNTZiMTE2ZjFlOGNkIn0.co2E3uDNvfSQEub2bbD3XNndOIFs2dcJW1J9FRL4Sic qa-web.intendu.com
+
 var page = require('webpage').create(),
         system = require('system'),
         address, output, size,
@@ -43,22 +45,52 @@ if (system.args.length < 3 || system.args.length > 7) {
             console.log('Unable to load the address!');
             phantom.exit();
         } else {
-            var condition = false,
-                    interval = setInterval(function () {
-                        if (!condition) {
-                            condition = page.evaluate(function () {
-                                return $('#allChartsRendered').is(':visible');
-                            });
-                        } else {
-                            clearInterval(interval);
-                            page.render(output);
+
+            //check if jQuery exists
+            setTimeout(function () {
+                var jQueryVersion;
+                jQueryVersion = page.evaluate(function () {
+                    return (typeof jQuery === 'function') ? jQuery.fn.jquery : undefined;
+                });
+                if (jQueryVersion) {
+                    console.log('jQuery', jQueryVersion);
+                    checkAndPrint();
+                } else {
+                    console.log('This site does not use jQuery.');
+                    page.includeJs(
+                            // Include the https version, you can change this to http if you like.
+                            'https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js',
+                            function () {
+                                (page.evaluate(function () {
+                                    // jQuery is loaded, now manipulate the DOM
+                                    checkAndPrint();
+                                }))
+                            }
+                    );
+                }
+                phantom.exit();
+            }, 2000);
+
+            //declare a function to manipulate the DOM
+            function checkAndPrint() {
+                var condition = false,
+                        interval = setInterval(function () {
+                            if (!condition) {
+                                condition = page.evaluate(function () {
+                                    return $('#allChartsRendered').is(':visible');
+                                });
+                            } else {
+                                clearInterval(interval);
+                                page.render(output);
 //                            page.render('/dev/stdout', {format: 'pdf'})
-                            phantom.exit();
-                        }
-                    }, 250);
+                                phantom.exit();
+                            }
+                        }, 250);
+            }
         }
     });
 }
+
 
 
 
