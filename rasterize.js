@@ -51,7 +51,7 @@ if (system.args.length < 3 || system.args.length > 7) {
                 var jQueryVersion;
 
                 //declare a function to manipulate the DOM
-                var checkAndPrint = function() {
+                var checkAndPrint = function () {
                     var condition = false,
                             interval = setInterval(function () {
                                 if (!condition) {
@@ -67,8 +67,6 @@ if (system.args.length < 3 || system.args.length > 7) {
                             }, 250);
                 }
 
-
-
                 jQueryVersion = page.evaluate(function () {
                     return (typeof jQuery === 'function') ? jQuery.fn.jquery : undefined;
                 });
@@ -81,10 +79,8 @@ if (system.args.length < 3 || system.args.length > 7) {
                             // Include the https version, you can change this to http if you like.
                             'https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js',
                             function () {
-                                (page.evaluate(function () {
-                                    // jQuery is loaded, now manipulate the DOM
-                                    checkAndPrint();
-                                }))
+                                // jQuery is loaded, now manipulate the DOM
+                                checkAndPrint();
                             }
                     );
                 }
