@@ -46,27 +46,12 @@ if (system.args.length < 3 || system.args.length > 7) {
             phantom.exit();
         } else {
 
-            //check if jQuery exists
-            setTimeout(function () {
-                var jQueryVersion = page.evaluate(function () {
-                    return (typeof jQuery === 'function') ? jQuery.fn.jquery : undefined;
-                });
-                if (jQueryVersion) {
-                    console.log('jQuery', jQueryVersion);
-                } else {
-                    console.log('This site does not use jQuery.');
-                    // Include the https version, you can change this to http if you like.
-                    page.includeJs('https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js');
-                    console.log('jQuery', jQueryVersion);
-                }
-            }, 2000);
-
             //wait for element and print PDF
             var condition = false,
                     interval = setInterval(function () {
                         if (!condition) {
                             condition = page.evaluate(function () {
-                                return $('#allChartsRendered').is(':visible');
+                                return !!document.getElementById('allChartsRendered');
                             });
                         } else {
                             clearInterval(interval);
